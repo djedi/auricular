@@ -309,7 +309,8 @@ CREATE TABLE hdb_catalog.event_log (
     tries integer DEFAULT 0 NOT NULL,
     created_at timestamp without time zone DEFAULT now(),
     locked boolean DEFAULT false NOT NULL,
-    next_retry_at timestamp without time zone
+    next_retry_at timestamp without time zone,
+    archived boolean DEFAULT false NOT NULL
 );
 
 
@@ -811,16 +812,18 @@ ALTER SEQUENCE hdb_catalog.remote_schemas_id_seq OWNED BY hdb_catalog.remote_sch
 --
 
 CREATE TABLE public.audiobooks (
-    id serial PRIMARY KEY,
+    id integer NOT NULL,
     title text NOT NULL,
     slug text NOT NULL,
     subtitle text,
     author text,
-    year smallint NOT NULL,
+    year smallint,
     encodedby text,
-    copyright text NOT NULL,
+    copyright text,
     cover text,
-    file text
+    duration real,
+    file text,
+    audible_removed boolean DEFAULT false NOT NULL
 );
 
 
@@ -874,7 +877,7 @@ COPY hdb_catalog.event_invocation_logs (id, event_id, status, request, response,
 -- Data for Name: event_log; Type: TABLE DATA; Schema: hdb_catalog; Owner: postgres
 --
 
-COPY hdb_catalog.event_log (id, schema_name, table_name, trigger_name, payload, delivered, error, tries, created_at, locked, next_retry_at) FROM stdin;
+COPY hdb_catalog.event_log (id, schema_name, table_name, trigger_name, payload, delivered, error, tries, created_at, locked, next_retry_at, archived) FROM stdin;
 \.
 
 
@@ -952,7 +955,7 @@ hdb_catalog	hdb_function_agg	return_table_info	object	{"manual_configuration": {
 --
 
 COPY hdb_catalog.hdb_schema_update_event (instance_id, occurred_at) FROM stdin;
-6d9184a5-a93e-45ce-98a1-ba1dd5b3988e	2019-11-12 21:56:06.925085+00
+1e533296-f81a-4d2e-b67d-9585dde107d8	2019-11-15 01:34:44.57044+00
 \.
 
 
@@ -990,7 +993,7 @@ public	audiobooks	{"custom_root_fields": {"delete": null, "insert": null, "selec
 --
 
 COPY hdb_catalog.hdb_version (hasura_uuid, version, upgraded_on, cli_state, console_state) FROM stdin;
-8f61c0a6-f0d5-4a4f-82d7-0585366736d6	26	2019-11-01 21:56:33.995765+00	{}	{"telemetryNotificationShown": true}
+85f048e8-eeb9-4579-ae7d-71311f04287d	27	2019-11-15 01:33:16.043573+00	{}	{}
 \.
 
 
@@ -1006,7 +1009,7 @@ COPY hdb_catalog.remote_schemas (id, name, definition, comment) FROM stdin;
 -- Data for Name: audiobooks; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.audiobooks (id, title, author, year, encodedby, copyright, slug, subtitle, cover, file) FROM stdin;
+COPY public.audiobooks (id, title, slug, subtitle, author, year, encodedby, copyright, cover, duration, file, audible_removed) FROM stdin;
 \.
 
 
@@ -1141,6 +1144,13 @@ ALTER TABLE ONLY public.audiobooks
 --
 
 CREATE INDEX event_invocation_logs_event_id_idx ON hdb_catalog.event_invocation_logs USING btree (event_id);
+
+
+--
+-- Name: event_log_delivered_idx; Type: INDEX; Schema: hdb_catalog; Owner: postgres
+--
+
+CREATE INDEX event_log_delivered_idx ON hdb_catalog.event_log USING btree (delivered);
 
 
 --

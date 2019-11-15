@@ -9,6 +9,7 @@ CREATE TABLE public.audiobooks (
     copyright text,
     cover text,
     duration real,
-    file text
+    file text,
+    audible_removed boolean DEFAULT false NOT NULL
 );
 

@@ -52,7 +52,6 @@ Restart a container
 
 # TODO
 
-- Upload audiobook
 - Wire up watch.js
 - Refactor scanner to use shared code in watch.js
 - Edit m4b metadata tags
