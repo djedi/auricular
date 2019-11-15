@@ -1,0 +1,5 @@
+.vscode
+db_data
+node_modules
+.DS_Store
+/covers

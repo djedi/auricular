@@ -1,0 +1,10 @@
+<template>
+  <section class="au-animate">
+    <h2>Authors</h2>
+    <ul>
+      <li repeat.for="author of authors">
+        <a route-href="route: author; params.bind: {author: author}">${author}</a>
+      </li>
+    </ul>
+  </section>
+</template>

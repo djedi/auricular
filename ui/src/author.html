@@ -1,0 +1,17 @@
+<template>
+  <section class="au-animate">
+    <h2>${author}</h2>
+    <ul>
+      <li repeat.for="book of books">
+        <a route-href="route: book; params.bind: {slug: book.slug}">
+          <img
+            src="http://localhost:8082/${book.cover}"
+            title.bind="book.title"
+            height="70"
+          />
+          ${book.title} (${book.year})</a
+        >
+      </li>
+    </ul>
+  </section>
+</template>

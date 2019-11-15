@@ -1,0 +1,22 @@
+<template>
+  <section class="au-animate">
+    <h2>Settings</h2>
+
+    <p show.bind="!scanning">
+      <button click.delegate="scan()">Re Scan Library</button>
+      This will clear your library and scan for all m4b files in your specified
+      library.
+    </p>
+    <div show.bind="scanning">Scanning...</div>
+    <br>
+
+    <p>
+      <h4>Upload Audiobook:</h4>
+      <div show.bind="!uploading">
+      <input type="file" id="audiobook" />
+      <button click.delegate="upload()">Upload</button>
+      </div>
+    </p>
+    <p show.bind="uploading">Uploading...</p>
+  </section>
+</template>

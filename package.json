@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.1.6-alpha.6",
+    "express-http-proxy": "^1.6.0",
+    "jimp": "^0.8.5",
+    "music-metadata": "^4.8.4",
+    "pg": "^7.12.1",
+    "recursive-readdir": "^2.2.2",
+    "recursive-watch": "^1.1.4",
+    "rimraf": "^3.0.0",
+    "shelljs": "^0.8.3",
+    "shelljs.exec": "^1.1.8",
+    "slug": "^1.1.0"
+  }
+}

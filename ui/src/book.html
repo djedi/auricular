@@ -1,0 +1,80 @@
+<template>
+  <section class="au-animate">
+    <h1>${book.title}</h1>
+    <h2 if.bind="book.subtitle">${book.subtitle}</h2>
+    <h3>
+      <a route-href="route: author; params.bind: {author: book.author}"
+        >${book.author}</a
+      >
+    </h3>
+    <h4>${book.year}</h4>
+
+    <a href="http://localhost:8082/${book.file}">Download</a><br />
+
+    <img
+      src="http://localhost:8082/${book.cover}"
+      title.bind="book.title"
+      alt.bind="book.title"
+      style="float:right"
+    />
+
+    <audio
+      src="http://localhost:8082/${book.file}"
+      type="audio/x-m4b"
+      controls
+      id="player"
+    >
+      <code> Your browser doesn't support audio tags</code>
+    </audio>
+    <div id="controls">
+      <button click.delegate="speed(1)">1x</button>
+      <button click.delegate="speed(1.25)">1.25x</button>
+      <button click.delegate="speed(1.5)">1.5x</button>
+      <button click.delegate="speed(2)">2x</button>
+    </div>
+
+    <br />
+    <h4>Chapters</h4>
+    <ul>
+      <li repeat.for="channel of channels">
+        <a href="" click.delegate="setTime(channel.start_time)"
+          >${channel.tags.title}</a
+        >
+      </li>
+    </ul>
+
+    <h3 style="color: red">Experiemental! ⤵️</h3>
+
+    <form submit.delegate="uploadCover(uploadImage)">
+      <h4>Upload new cover art:</h4>
+      <input
+        name="image"
+        type="file"
+        files.bind="uploadImage"
+        accept="image/jpeg, image/png"
+      />
+      <button type="submit">Upload</button>
+    </form>
+    <br />
+
+    <p show.bind="!book.audible_removed">
+      Audible Tools<br />
+      <button click.delegate="trimAudible()">
+        Remove Audible intro &amp; outro
+      </button>
+      <button click.delegate="markAudibleRemoved()">
+        Mark Audible Removed
+      </button>
+    </p>
+
+    <p>
+      <button click.delegate="reimport()">Re-import</button>
+    </p>
+
+    <p>
+      <button click.delegate="delete()">Remove this book</button>
+    </p>
+
+    <p>(Book ID: ${book.id})</p>
+  </section>
+</template>

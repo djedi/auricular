@@ -1,0 +1,25 @@
+<template>
+  <section class="au-animate">
+    <h2>Library</h2>
+    <p>
+      <form submit.delegate="search()"> Search:
+      <input type="text" value.bind="term" />
+      <button click.delegate="search()" type="submit">
+        Search
+      </button>
+    </form>
+    </p>
+    <ul>
+      <li repeat.for="book of library">
+        <a route-href="route: book; params.bind: {slug: book.slug}">
+          <img
+            src="http://localhost:8082/${book.cover}"
+            title.bind="book.title"
+            height="50"
+          />
+          ${book.title} (${book.year})</a
+        >
+      </li>
+    </ul>
+  </section>
+</template>
