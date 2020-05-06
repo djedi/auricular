@@ -1,7 +1,6 @@
 version: "2.4"
 services:
   postgres:
-    name: Auricular-postgres
     image: postgres
     restart: always
     volumes:
@@ -10,7 +9,6 @@ services:
     ports:
       - 5432:5432
   graphql-engine:
-    name: Auricular-graphql
     image: hasura/graphql-engine:v1.0.0-beta.10
     ports:
       - "8081:8080"
@@ -24,7 +22,6 @@ services:
       ## uncomment next line to set an admin secret
       # HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
   api:
-    name: Auricular-api
     build: .
     command: nodemon api.js
     ports:
@@ -34,7 +31,6 @@ services:
       - ./covers/:/usr/src/app/covers
       - ${AUDIOBOOK_DIR}:/usr/src/app/audiobooks
   aurelia:
-    name: Auricular-aurelia
     build:
       context: .
       dockerfile: Aurelia.Dockerfile
