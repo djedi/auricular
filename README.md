@@ -19,8 +19,7 @@ This should build and start the docker containers needed for this project, which
 
 ## Loading Data
 
-Populate postgresql with the attached sql dump
-`TODO:`
+Postgres should automatically install the tables in init.sql. If that doesn't work, you can try installing from dump.sql (see command below). You'll need to go into Hasura and "track" the `audiobooks` table.
 
 Run the scan.js script to populate the database with your audiobook files.
 `docker exec -it auricular_api_1 node scan.js`
