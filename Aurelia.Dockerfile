@@ -9,8 +9,8 @@ RUN \
     npm install -g yarn \
     && yarn global add aurelia-cli \
     && yarn global add http-server \
-    && yarn
-    && npm rebuild node-sass
+    && yarn \
+    && npm rebuild node-sass \
     && npm run build
 
 EXPOSE 8082
