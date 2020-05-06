@@ -2,6 +2,8 @@ FROM jrottenberg/ffmpeg:4.1-alpine
 FROM node:10-alpine
 
 COPY --from=0 / /
+WORKDIR /usr/src/app
+COPY ./package.json .
 
 RUN \
     echo "---- INSTALL BUILD DEPENDENCIES ----" \
@@ -31,13 +33,11 @@ RUN \
     && unzip master.zip \
     && rm master.zip \
     && cd mp4v2-master \
-    && ./configure && make -j4 && make install && make distclean && rm -rf /tmp/* 
+    && ./configure && make -j4 && make install && make distclean && rm -rf /tmp/* \
+    && npm install -g yarn nodemon aurelia-cli \
+    && yarn
 
 WORKDIR /usr/src/app
-
-COPY ./package.json .
-RUN npm install -g yarn nodemon aurelia-cli
-RUN yarn
 
 EXPOSE 8082
 
